@@ -17,6 +17,7 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
+  it { should respond_to(:posts) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -114,4 +115,55 @@ describe User do
       before { @user.save }
       its(:remember_token) { should_not be_blank }
     end
+    
+    describe "post associations" do
+
+      before { @user.save }
+      let!(:older_post) do
+        FactoryGirl.create(:post, user: @user, created_at: 1.day.ago)
+      end
+      let!(:newer_post) do
+        FactoryGirl.create(:post, user: @user, created_at: 1.hour.ago)
+      end
+
+      it "should have the right posts in the right order" do
+        expect(@user.posts.to_a).to eq [newer_post, older_post]
+      end
+      
+      it "should destroy associated posts" do
+        posts = @user.posts.to_a
+        @user.destroy
+        expect(posts).not_to be_empty
+        posts.each do |post|
+          expect(Post.where(id: post.id)).to be_empty
+        end
+      end
+      
+      describe "status" do
+        let(:unfollowed_post) do
+          FactoryGirl.create(:post, user: FactoryGirl.create(:user))
+        end
+
+        its(:feed) { should include(newer_post) }
+        its(:feed) { should include(older_post) }
+        its(:feed) { should_not include(unfollowed_post) }
+      end
+    end
+    
+    # describe "profile page" do
+    #   let(:user) { FactoryGirl.create(:user) }
+    #   let!(:m1) { FactoryGirl.create(:post, user: user, content: "Foo") }
+    #   let!(:m2) { FactoryGirl.create(:post, user: user, content: "Bar") }
+    # 
+    #   before { visit user_path(user) }
+    # 
+    #   it { should have_content(user.name) }
+    #   it { should have_title(user.name) }
+    # 
+    #   describe "posts" do
+    #     it { should have_content(m1.content) }
+    #     it { should have_content(m2.content) }
+    #     it { should have_content(user.posts.count) }
+    #   end
+    # end
 end

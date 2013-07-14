@@ -49,14 +49,28 @@ describe "Authentication" do
           fill_in "Email",    with: user.email
           fill_in "Password", with: user.password
           click_button "Sign in"
-        end
+      end
 
-        describe "after signing in" do
+      describe "after signing in" do
 
           it "should render the desired protected page" do
             expect(page).to have_title('Edit user')
           end
+      end
+        
+      describe "in the Posts controller" do
+
+          describe "submitting to the create action" do
+            before { post posts_path }
+            specify { expect(response).to redirect_to(signin_path) }
+          end
+
+          describe "submitting to the destroy action" do
+            before { delete post_path(FactoryGirl.create(:post)) }
+            specify { expect(response).to redirect_to(signin_path) }
+          end
         end
+        
       end
 
       describe "in the Users controller" do
