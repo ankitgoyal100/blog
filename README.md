@@ -24,4 +24,4 @@ def secure_token
   end
 end
 
-SampleApp::Application.config.secret_token = find_secure_token
+AnkitBlog::Application.config.secret_token = find_secure_token

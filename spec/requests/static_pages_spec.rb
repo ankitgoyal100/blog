@@ -7,15 +7,14 @@ describe "Static pages" do
   describe "Home page" do
     before { visit root_path }
 
-    it { should have_content('Sample App') }
     it { should have_title(full_title('')) }
     it { should_not have_title('| Home') }
     
     describe "for signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
       before do
-        FactoryGirl.create(:post, user: user, content: "Lorem ipsum")
-        FactoryGirl.create(:post, user: user, content: "Dolor sit amet")
+        FactoryGirl.create(:post, user: user, title: "In static pages spec", content: "Lorem ipsum")
+        FactoryGirl.create(:post, user: user, title: "In static pages spec 2", content: "Dolor sit amet")
         sign_in user
         visit root_path
       end

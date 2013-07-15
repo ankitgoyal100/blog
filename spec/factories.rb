@@ -11,6 +11,7 @@ FactoryGirl.define do
   end
 
   factory :post do
+    title "Test title"
     content "Test post"
     user
   end

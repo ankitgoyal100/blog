@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-SampleApp::Application.config.secret_key_base = '0e3d319cf7c0d51cb3733f589b1426535c6be22443aca88c3b1c4ffbfc70cd4d6b859ca038d768274ffd109c59151a0e0c18636c096f78764dd7f31619a314bc'
+AnkitBlog::Application.config.secret_key_base = '0e3d319cf7c0d51cb3733f589b1426535c6be22443aca88c3b1c4ffbfc70cd4d6b859ca038d768274ffd109c59151a0e0c18636c096f78764dd7f31619a314bc'

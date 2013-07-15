@@ -24,6 +24,7 @@ describe "Post pages" do
 
     describe "with valid information" do
 
+      before { fill_in 'post_title', with: "Some Latin title "}
       before { fill_in 'post_content', with: "Lorem ipsum" }
       it "should create a post" do
         expect { click_button "Post" }.to change(Post, :count).by(1)

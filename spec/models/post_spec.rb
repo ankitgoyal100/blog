@@ -3,10 +3,11 @@ require 'spec_helper'
 describe Post do
 
   let(:user) { FactoryGirl.create(:user) }
-  before { @post = user.posts.build(content: "Lorem ipsum") }
+  before { @post = user.posts.build(title: "Test title", content: "Lorem ipsum") }
 
   subject { @post }
 
+  it {should respond_to (:title) }
   it { should respond_to(:content) }
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
@@ -23,9 +24,20 @@ describe Post do
     before { @post.content = " " }
     it { should_not be_valid }
   end
+  
+  describe "with blank title" do
+    before { @post.title = " " }
+    it { should_not be_valid }
+  end
 
   describe "with content that is too long" do
     before { @post.content = "a" * 1001 }
     it { should_not be_valid }
   end
+  
+  describe "with content that is too long" do
+    before { @post.title = "a" * 101 }
+    it { should_not be_valid }
+  end
+  
 end
