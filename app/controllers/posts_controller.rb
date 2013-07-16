@@ -40,7 +40,7 @@ class PostsController < ApplicationController
       render 'static_pages/home'
     end
   end
-  
+
   private
 
     def post_params

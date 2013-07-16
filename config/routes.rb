@@ -2,6 +2,11 @@ AnkitBlog::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :posts, only: [:create, :destroy, :show, :edit, :update]
+  
+  resources :posts do
+    resources :comments
+  end
+  
   root  'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
