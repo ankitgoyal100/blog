@@ -12,9 +12,7 @@
 		
 	  <% if current_user?(item.user) %>
 	    <%= link_to "edit", edit_post_path(item) %>
-	  <% end %>
-		|
-  <% if current_user?(item.user) %>
+			|
     <%= link_to "delete", item, method: :delete,
                                      data: { confirm: "You sure?" },
                                      title: item.content %>

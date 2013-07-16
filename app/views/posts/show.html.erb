@@ -30,5 +30,8 @@
   </p>
 <% end %>
  
-<%= link_to 'Edit Post', edit_post_path(@post) %> |
+<% if current_user?(@post.user) %>
+	<%= link_to 'Edit Post', edit_post_path(@post) %> |
+<% end %>
+
 <%= link_to 'Back to Posts', '/' %>
